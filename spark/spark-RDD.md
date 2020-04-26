@@ -16,21 +16,25 @@
 
       1. 集合中创建RDD
 
-         parallize(1 to 10)
+         parallize(seq)
 
-         makeRDD(1 to 10)
+         makeRDD(seq)
 
-         
+         makeRDD(seq[(T,seq)]) 可以指定分区 
 
       2. 外部存储创建RDD
 
+         textFile("path")
+
       3. 从其他RDD转换
+
+         从另一个RDD转换
 
    2. 转换
 
    3. 缓存
-
+   
    4. 行动
-
+   
    5. 输出
 
