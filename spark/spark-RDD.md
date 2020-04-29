@@ -62,18 +62,76 @@
    
       - combineByKey (createCombiner: V => C,mergeValue: (C, V) => C,mergeCombiners: (C, C) => C)当遇到的key没出现，执行createCombiner，如果遇到了，执行mergeValue，最后把不同分区按照mergerCombiner合并
    
-      - aggregateByKey(zeroValue:U,[partitioner:Partitioner])(seqOp:(U,V)=>U,combOn:(U,U)=>U)在kv对的RDD中，按照Key将value进行分组合并，合并时，将每个value和初始值作为seq函数的参数进行计算，返回的结果作为一个新的kv对，然后再将结果按照key进行合并，最后将每个分组的value传递给combine继续宁计算。
+      - aggregateByKey(zeroValue:U,[partitioner:Partitioner])(seqOp:(U,V)=>U,combOn:(U,U)=>U)在kv对的RDD中，按照Key将value进行分组合并，合并时，将每个value和初始值作为seq函数的参数进行计算，返回的结果作为一个新的kv对，然后再将结果按照key进行合并，最后将每个分组的value传递给combine继续进行计算。
    
       - foldByKey(zeroValue:V)(func:(V,V)=>V):RDD[(K,V)] 
    
         对aggreateByKey的简化操作 其中关于seqop和combOn都是一样的
+        
+      - sortByKey在一个(K,V)RDD上调用，K必须实现了Ordered接口，返回一个按照Key排序的RDD
    
-   4. 行动
+      - sortBy(func,[ascending],[numTasks])与sortKey类似，但是更加灵活，func是对值进行操作处理，然后对结果排序
    
-      - sample(withReplacement,fraction,seed) 指定随机种子抽样数量为fraction的数据，withReplacement 表示是否是有放回的
+      - join (K,V) 和(K,W)调用，然后把相同的对应元素堆在一起 (K,(V,W))的RDD，需要注意的是只返回Key在两个RDD中都存在的情况
+   
+      - cogroup 在(K,V) (K,W)两个RDD上调用，返回一个(K,(iterator[V],iterator[W]))的RDD，不同Key也会返回
+   
+      - cartesian 笛卡尔积，对两个序列RDD生成对偶的RDD
+   
+      - pipe 对每一个分区都执行一个perl或者shell脚本，返回输出的RDD
+   
+        ```bash
+        #!/bin/bash
+        echo "A"
+        while read LINE;do
+        	echo ">>>"${LINE}
+        done
+        ```
+   
+      - coalesce(numPatitions) 缩减分区数 用于大数据过滤后，提高小数据集的执行效率
+   
+      - repatition(numPatitions) 根据分区数，重新通过网络混洗所有数据
+   
+      - repatitionAndSortWithinPartitions(patitioner) 是repatition函数的变种，不同的是此方法在给定的patitioner内部进行排序 效率更高
+   
+      - glom 对每一个分区形成一个数组 形成的新的RDD类型 RDD[Array[T]]
+   
+      - mapValues 针对(K,V)这种类型，只对values进行操作
+   
+      - subtract 计算差的一种函数，rdd1 rdd2，rdd1.subtract(rdd2) 去除两个RDD中相同的元素，保留rdd1中不同的元素
+   
+      - sample(withReplacement,fraction,seed) 指定随机种子抽样数量为fraction的数据，withReplacement 表示是否是有放回的 返回RDD
+   
+   3. 行动
+   
       - takeSample 是action操作，类似sample，直接返回结果集合
+      - reduce(func) 通过func函数聚集RDD中的所有元素
+      - collect 以数组形式返回各个元素
+      - count 返回RDD中元素个数
+      - first 返回第一个元素
+      - take 返回前N个元素
+      - takeOrdered(N,[ascending]) 返回前N个排序后的结果
+      - aggregate(zeroValue)(seqOp,combOp) 类似aggregateByKey 不过是action操作，返回结果类型不需要和原RDD一样
+      - fold(zero)(func) aggregate 的简化操作 seqOp 和CombOp 一样
+      - saveAsTextFile 文本文件
+      - saveAsSequenceFile  序列文件
+      - saveAsObjectFile 对象序列化
+      - countByKey() 针对(K,V)这种RDD返回(K,Int)这种map
+      - foreach(func) 对每一个元素上运行func
    
-   4. 输出
+      当你在RDD中使用到了class的方法或者属性，该class 需要实现java.io.serizlizable接口 
+   
+   4. 输入输出
+   
+      1. 文本文件
+   
+         textFile 输入 
+   
+         saveAsTextFile 输出
+   
+      2. JSON文件输入输出
+   
+         rextFile 自动读取JSON文件
    
    5. 依赖关系
    
