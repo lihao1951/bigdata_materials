@@ -113,7 +113,7 @@
 
 5. 上传至spark服务器，输入命令运行
 
-   ![上传至spark服务器](D:\work\code\md\spark\img\upload-word-count-spark.png)
+   ![上传至spark服务器](img\upload-word-count-spark.png)
 
    ```sh
    ./bin/spark-submit \
@@ -124,5 +124,5 @@
 
    运行成功后返回
 
-   ![wordcount结果](D:\work\code\md\spark\img\wordcount-result.png)
+   ![wordcount结果](img\wordcount-result.png)
 

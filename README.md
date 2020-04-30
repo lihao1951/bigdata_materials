@@ -7,4 +7,5 @@
 - Zookeeper
 - Hive
 - Hbase
+- Jackson
 
