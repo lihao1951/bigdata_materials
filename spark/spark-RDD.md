@@ -132,6 +132,32 @@
       2. JSON文件输入输出
    
          rextFile 自动读取JSON文件
+         
+         自己写解析和反解析方法：利用Jackson，如果多个Partition，那么一行就得一个json格式；如果是跨行的，就得一次读取所有数据，整体解析
+         
+      3. CSV文件
+   
+         与JSON格式类似，也是需要读取文件后再进行解析
+   
+      4. SequenceFile
+   
+         与Hadoop交互的文件，可以使用sc.sequenceFile读取
+   
+      5. ObjectFile
+   
+         输出 saveAsObjectFile
+   
+         输入 sc.objectFile
+   
+      6. 对HadoopAPI的读取
+   
+         暂时不更新
+   
+      7. 对于关系型数据库的输入和输出
+   
+         通过jdbcRDD来实现，需要传入sc，获取JDBC的连接 查询语句 id上下界 分区数 提供解析ResultSet的函数
+   
+         
    
    5. 依赖关系
    
