@@ -35,7 +35,7 @@ ssh ict51
 
 ```sh
 systemctl stop firewalld
-systemctl disabled firewalld
+systemctl disable firewalld
 ```
 
 ## 配置JDK和Scala
