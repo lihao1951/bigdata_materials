@@ -56,3 +56,4 @@ Spark On Yarn 一般用到生产环境（cluster部署模式，client测试）
 Standalone的话 一般用于测试 
 
 Local一般用于快速验证
+

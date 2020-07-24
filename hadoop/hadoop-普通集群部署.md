@@ -50,7 +50,7 @@ Scala版本：2.12.8
 
 ```sh
 export JAVA_HOME=/home/bigdata/jdk1.8
-export SCALA_HOME=/home/bigdata/scala-2.12.8
+export SCALA_HOME=/home/bigdata/scala-2.11.12
 export PATH=$SCALA_HOME/bin:$JAVA_HOME/bin:$PATH
 ```
 
@@ -115,10 +115,12 @@ tar -xf hadoop-2.7.7.tar.gz
 cd etc/hadoop
 ```
 
-1. 修改hadoop-env.xml
+1. 修改hadoop-env.sh
 
    ```xml
    export JAVA_HOME=/home/bigdata/jdk1.8
+   export HADOOP_PID_DIR=/home/hadoop/software/hadoop-2.7.7/tmp/pid/
+   export HADOOP_SECURE_DN_PID_DIR=${HADOOP_PID_DIR}
    ```
 
 2.  修改mapred-site.xml
