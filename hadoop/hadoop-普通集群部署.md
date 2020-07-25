@@ -25,7 +25,7 @@ ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa # 每个服务器都运行，回车 自
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys # 在ict50下进行
 ssh localhost # 在ict50下实验，如果需要输入密码，ssh免密没有成功，需要排查问题；否则成功
 # 成功后将密码发给其他节点用户下
-scp ~/.ssh/authorized_keys bigdata@ict51:~/.ssh/
+    scp ~/.ssh/authorized_keys bigdata@ict51:~/.ssh/
 scp ~/.ssh/authorized_keys bigdata@ict52:~/.ssh/
 # 这样实验从ict50 免密到其他节点
 ssh ict51
@@ -115,7 +115,7 @@ tar -xf hadoop-2.7.7.tar.gz
 cd etc/hadoop
 ```
 
-1. 修改hadoop-env.xml
+1. 修改hadoop-env.sh
 
    ```xml
    export JAVA_HOME=/home/bigdata/jdk1.8
